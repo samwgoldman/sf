@@ -942,7 +942,32 @@ Proof.
         converting it to unary and then incrementing. 
 *)
 
-(* FILL IN HERE *)
+Inductive bin : Type :=
+  | Zero : bin
+  | Twice : bin -> bin
+  | More : bin -> bin.
+
+Definition bin_inc (b : bin) : bin :=
+  match b with
+  | Zero => More Zero
+  | Twice b' => More b
+  | More b' => Twice b
+  end.
+
+Fixpoint bin_to_nat (b : bin) : nat :=
+  match b with
+  | Zero => O
+  | Twice b' => 2 * bin_to_nat b'
+  | More b' => 2 * bin_to_nat b' + 1
+  end.
+
+Example test_bin1 : bin_to_nat (bin_inc Zero) = bin_to_nat Zero + 1.
+Proof. reflexivity. Qed.
+Example test_bin2 : bin_to_nat (bin_inc (More Zero)) = bin_to_nat (More Zero) + 1.
+Proof. reflexivity. Qed.
+Example test_bin3 : bin_to_nat (Twice (More Zero)) = 2 * bin_to_nat (More Zero).
+Proof. reflexivity. Qed.
+
 (** [] *)
 
 (* ###################################################################### *)
