@@ -492,7 +492,10 @@ Proof. reflexivity. Qed.
 Theorem andb_false_r : forall b : bool,
   andb b false = false.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros b. destruct b.
+  Case "b = true". reflexivity.
+  Case "b = false". reflexivity.
+  Qed.
 
 Theorem plus_ble_compat_l : forall n m p : nat, 
   ble_nat n m = true -> ble_nat (p + n) (p + m) = true.
