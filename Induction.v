@@ -411,10 +411,35 @@ Proof.
     in the proof of this one.)  You may find that [plus_swap] comes in
     handy. *)
 
+Theorem mult_S_r : forall m n : nat,
+  m * S n = m + m * n.
+Proof.
+  intros m n.
+  induction m as [| m'].
+  Case "m = 0".
+    reflexivity.
+  Case "m = S m'".
+    simpl.
+    rewrite -> IHm'.
+    rewrite -> plus_swap.
+    reflexivity.
+  Qed.
+
 Theorem mult_comm : forall m n : nat,
  m * n = n * m.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros m n.
+  induction m as [| m'].
+  Case "n = 0".
+    rewrite -> mult_0_r.
+    reflexivity.
+  Case "n = S n'".
+    simpl.
+    rewrite -> mult_S_r.
+    rewrite -> IHm'.
+    reflexivity.
+  Qed.
+
 (** [] *)
 
 (** **** Exercise: 2 stars, optional (evenb_n__oddb_Sn) *)
