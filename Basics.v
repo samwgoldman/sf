@@ -882,12 +882,30 @@ Proof.
 (** Prove the following theorem.  (You may want to first prove a
     subsidiary lemma or two.) *)
 
+Theorem andb_true_false : andb true false = false.
+Proof. reflexivity. Qed.
+
+Theorem andb_false_true : andb false true = false.
+Proof. reflexivity. Qed.
+
 Theorem andb_eq_orb : 
   forall (b c : bool),
   (andb b c = orb b c) ->
   b = c.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros b c H.
+  destruct b.
+  destruct c.
+  reflexivity.
+  rewrite <- andb_true_false.
+  rewrite -> H.
+  reflexivity.
+  destruct c.
+  rewrite <- andb_false_true.
+  rewrite -> H.
+  reflexivity.
+  reflexivity.
+  Qed.
 
 (** **** Exercise: 3 stars (binary) *)
 (** Consider a different, more efficient representation of natural
