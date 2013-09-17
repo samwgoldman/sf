@@ -395,7 +395,15 @@ Proof.
 Theorem plus_swap : forall n m p : nat, 
   n + (m + p) = m + (n + p).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m p.
+  rewrite -> plus_assoc.
+  rewrite -> plus_assoc.
+  assert (H: n + m = m + n).
+    Case "Proof of assertion".
+    rewrite -> plus_comm. reflexivity.
+  rewrite -> H.
+  reflexivity.
+  Qed.
 
 
 (** Now prove commutativity of multiplication.  (You will probably
