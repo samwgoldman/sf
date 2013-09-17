@@ -514,7 +514,11 @@ Proof. reflexivity. Qed.
 
 Theorem mult_1_l : forall n:nat, 1 * n = n.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n.
+  simpl.
+  rewrite -> plus_0_r.
+  reflexivity.
+  Qed.
 
 Theorem all3_spec : forall b c : bool,
     orb
