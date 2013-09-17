@@ -268,7 +268,13 @@ Proof.
 Theorem plus_assoc : forall n m p : nat,
   n + (m + p) = (n + m) + p.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m p.
+  induction n as [| n'].
+  Case "n = 0".
+    reflexivity.
+  Case "n = S n'".
+    simpl. rewrite -> IHn'. reflexivity.
+  Qed.
 (** [] *)
 
 (** **** Exercise: 2 stars (double_plus) *)
