@@ -487,8 +487,7 @@ Proof.
 
 Theorem zero_nbeq_S : forall n:nat,
   beq_nat 0 (S n) = false.
-Proof.
-  (* FILL IN HERE *) Admitted.
+Proof. reflexivity. Qed.
 
 Theorem andb_false_r : forall b : bool,
   andb b false = false.
