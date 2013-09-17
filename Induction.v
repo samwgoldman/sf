@@ -449,7 +449,18 @@ Proof.
 Theorem evenb_n__oddb_Sn : forall n : nat,
   evenb n = negb (evenb (S n)).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n.
+  induction n as [| n'].
+  Case "n = 0".
+    reflexivity.
+  Case "n = S n'".
+    assert (H: evenb (S (S n')) = evenb n'). reflexivity.
+    rewrite -> H.
+    rewrite -> IHn'.
+    rewrite -> negb_involutive.
+    reflexivity.
+  Qed.
+
 (** [] *)
 
 (* ###################################################################### *)
