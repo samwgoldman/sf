@@ -947,11 +947,11 @@ Inductive bin : Type :=
   | Twice : bin -> bin
   | More : bin -> bin.
 
-Definition bin_inc (b : bin) : bin :=
+Fixpoint bin_inc (b : bin) : bin :=
   match b with
   | Zero => More Zero
-  | Twice b' => More b
-  | More b' => Twice b
+  | Twice b' => More b'
+  | More b' => Twice (bin_inc b')
   end.
 
 Fixpoint bin_to_nat (b : bin) : nat :=
