@@ -621,7 +621,47 @@ Proof.
     wanting to change your original definitions to make the property
     easier to prove, feel free to do so.) *)
 
-(* FILL IN HERE *)
+Inductive bin : Type :=
+  | Zero : bin
+  | Twice : bin -> bin
+  | More : bin -> bin.
+
+Fixpoint bin_inc (b : bin) : bin :=
+  match b with
+  | Zero => More Zero
+  | Twice b' => More b'
+  | More b' => Twice (bin_inc b')
+  end.
+
+Fixpoint bin_to_nat (b : bin) : nat :=
+  match b with
+  | Zero => O
+  | Twice b' => 2 * bin_to_nat b'
+  | More b' => 2 * bin_to_nat b' + 1
+  end.
+
+Theorem binary_commute : forall b : bin,
+  bin_to_nat (bin_inc b) = bin_to_nat b + 1.
+Proof.
+  intros b. induction b as [| b' | b'].
+  Case "b = Zero".
+    reflexivity.
+  Case "b = Twice b'".
+    reflexivity.
+  Case "b = More b'".
+    simpl.
+    rewrite -> IHb'.
+    rewrite -> plus_0_r.
+    rewrite -> plus_0_r.
+    rewrite -> plus_assoc.
+    assert (bin_to_nat b' + 1 + bin_to_nat b' = bin_to_nat b' + bin_to_nat b' + 1).
+      rewrite -> plus_comm.
+      rewrite -> plus_assoc.
+      reflexivity.
+    rewrite -> H.
+    reflexivity.
+  Qed.
+
 (** [] *)
 
 
