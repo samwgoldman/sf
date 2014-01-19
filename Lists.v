@@ -865,7 +865,15 @@ Proof.
        ([::]), [snoc], and [app] ([++]).  
      - Prove it. *) 
 
-(* FILL IN HERE *)
+Theorem snoc_app_to_app_cons : forall (l1 l2 : natlist) (n : nat),
+  (snoc l1 n) ++ l2 = l1 ++ (n :: l2).
+Proof.
+  intros l1 l2 n. induction l1 as [| m l1'].
+  Case "l1 = nil".
+    reflexivity.
+  Case "l1 = m :: l1'".
+    simpl. rewrite -> IHl1'. reflexivity.
+  Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars, advanced (bag_proofs) *)
