@@ -180,7 +180,12 @@ Inductive baz : Type :=
    | y : baz -> bool -> baz.
 
 (** How _many_ elements does the type [baz] have? 
-(* FILL IN HERE *)
+
+The type [baz] has zero (0) elements because both [x] and [y] require
+a [baz] in order to construct a new [baz].
+
+This is a circular definition.
+
 [] *)
 
 End MumbleBaz.
