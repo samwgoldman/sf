@@ -441,7 +441,22 @@ Proof. reflexivity. Qed.
     you haven't learned yet.  Feel free to ask for help if you get
     stuck! *)
 
-(* FILL IN HERE *)
+Fixpoint same_bag (s1:bag) (s2:bag) : bool :=
+  match s1 with
+  | nil => beq_nat 0 (length s2)
+  | h :: t =>
+    match count h s2 with
+    | 0 => false
+    | _ => same_bag t (remove_one h s2)
+    end
+  end.
+
+Example test_same_bag1: same_bag [1;2] [2;1] = true.
+Proof. reflexivity. Qed.
+Example test_same_bag2: same_bag [1;2;3] [1;2] = false.
+Proof. reflexivity. Qed.
+Example test_same_bag3: same_bag [1;2] [1;2;3] = false.
+Proof. reflexivity. Qed.
 (** [] *)
 
 (* ###################################################### *)
