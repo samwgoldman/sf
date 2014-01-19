@@ -1051,7 +1051,10 @@ Proof. reflexivity. Qed.
 Theorem option_elim_hd : forall (l:natlist) (default:nat),
   hd default l = option_elim default (hd_opt l).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros l. destruct l as [| n l'].
+  reflexivity.
+  reflexivity.
+  Qed.
 (** [] *)
 
 (** **** Exercise: 2 stars (beq_natlist) *)
