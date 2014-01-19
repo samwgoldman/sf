@@ -919,7 +919,17 @@ Proof.
 (** Write down an interesting theorem about bags involving the
     functions [count] and [sum], and prove it.*)
 
-(* FILL IN HERE *)
+Theorem sum_increases_count: forall (s1 s2 : bag),
+  ble_nat (count 0 s1) (count 0 (sum s1 s2)) = true.
+Proof.
+  intros s1 s2. induction s1 as [| m s1'].
+  Case "s1 = nil".
+    reflexivity.
+  Case "s1 = m : s1'".
+    simpl. destruct m as [| m'].
+    simpl. rewrite -> IHs1'. reflexivity.
+    simpl. rewrite -> IHs1'. reflexivity.
+  Qed.
 (** [] *)
 
 (** **** Exercise: 4 stars, advanced (rev_injective) *)
