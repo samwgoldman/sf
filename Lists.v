@@ -767,13 +767,35 @@ Proof.
 Theorem app_nil_end : forall l : natlist, 
   l ++ [] = l.   
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros l. induction l as [| n l'].
+  Case "l = nil".
+    reflexivity.
+  Case "l = n :: l'".
+    simpl. rewrite -> IHl'. reflexivity.
+  Qed.
 
+Lemma rev_snoc : forall (l:natlist) (m:nat),
+  rev (snoc l m) = m :: rev l.
+Proof.
+  intros l m. induction l as [| n l'].
+  Case "l = nil".
+    reflexivity.
+  Case "l = n :: l'".
+    simpl. rewrite -> IHl'. reflexivity.
+  Qed.
 
 Theorem rev_involutive : forall l : natlist,
   rev (rev l) = l.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros l. induction l as [| n l'].
+  Case "l = nil".
+    reflexivity.
+  Case "l = n :: l'".
+    simpl.
+    rewrite -> rev_snoc.
+    rewrite -> IHl'.
+    reflexivity.
+  Qed.
 
 (** There is a short solution to the next exercise.  If you find
     yourself getting tangled up, step back and try to look for a
@@ -782,25 +804,56 @@ Proof.
 Theorem app_ass4 : forall l1 l2 l3 l4 : natlist,
   l1 ++ (l2 ++ (l3 ++ l4)) = ((l1 ++ l2) ++ l3) ++ l4.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros l1 l2 l3 l4.
+  rewrite -> app_ass.
+  rewrite -> app_ass.
+  reflexivity.
+  Qed.
 
 Theorem snoc_append : forall (l:natlist) (n:nat),
   snoc l n = l ++ [n].
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros l n. induction l as [| m l'].
+  Case "l = nil".
+    reflexivity.
+  Case "l = m :: l'".
+    simpl. rewrite -> IHl'. reflexivity.
+  Qed.
 
+Lemma app_snoc_end : forall (l1:natlist) (l2:natlist) (n:nat),
+  l1 ++ snoc l2 n = snoc (l1 ++ l2) n.
+Proof.
+  intros l1 l2 n. induction l1 as [| m l1'].
+  Case "l1 = nil".
+    reflexivity.
+  Case "l1 = m :: l1'".
+    simpl. rewrite -> IHl1'. reflexivity.
+  Qed.
 
 Theorem distr_rev : forall l1 l2 : natlist,
   rev (l1 ++ l2) = (rev l2) ++ (rev l1).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros l1 l2. induction l1 as [| n l1'].
+  Case "l1 = nil".
+    simpl. rewrite -> app_nil_end. reflexivity.
+  Case "l1 = n :: l1'".
+    simpl. rewrite -> IHl1'. rewrite -> app_snoc_end. reflexivity.
+  Qed.
 
 (** An exercise about your implementation of [nonzeros]: *)
 
 Lemma nonzeros_app : forall l1 l2 : natlist,
   nonzeros (l1 ++ l2) = (nonzeros l1) ++ (nonzeros l2).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros l1 l2. induction l1 as [| n l1'].
+  Case "l1 = nil".
+    reflexivity.
+  Case "l1 = n :: l1'".
+    simpl. rewrite -> IHl1'.
+    destruct n as [| n'].
+    reflexivity.
+    reflexivity.
+  Qed.
 (** [] *)
 
 (* ###################################################### *)
