@@ -188,6 +188,15 @@ This is a circular definition.
 
 [] *)
 
+Theorem bazEmpty : baz -> False.
+Proof.
+  intros baz. induction baz as [x | y].
+  Case "baz = x".
+    apply IHx.
+  Case "baz = y".
+    apply IHy.
+  Qed.
+
 End MumbleBaz.
 
 (* ###################################################### *)
