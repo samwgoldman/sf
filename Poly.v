@@ -1100,9 +1100,28 @@ Proof. reflexivity. Qed.
 
 (** Prove the correctness of [fold_length]. *)
 
+Lemma fold_length_cons : forall X (l : list X) (x : X),
+  fold_length (x :: l) = S (fold_length l).
+Proof.
+  intros X l x. induction l as [| h l'].
+  Case "l = nil".
+    reflexivity.
+  Case "l = h :: l'".
+    reflexivity.
+  Qed.
+
 Theorem fold_length_correct : forall X (l : list X),
   fold_length l = length l.
-(* FILL IN HERE *) Admitted. 
+Proof.
+  intros X l. induction l as [| x l'].
+  Case "l = nil".
+    reflexivity.
+  Case "l = x :: l'".
+    simpl.
+    rewrite -> fold_length_cons.
+    rewrite -> IHl'.
+    reflexivity.
+  Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars (fold_map) *)
