@@ -1129,12 +1129,28 @@ Proof.
     below. *)
 
 Definition fold_map {X Y:Type} (f : X -> Y) (l : list X) : list Y :=
-(* FILL IN HERE *) admit.
+  fold (fun x => cons (f x)) l nil.
 
 (** Write down a theorem in Coq stating that [fold_map] is correct,
     and prove it. *)
 
-(* FILL IN HERE *)
+Lemma fold_map_cons : forall X Y (f : X -> Y) (l : list X) (x : X),
+  fold_map f (x :: l) = (f x) :: fold_map f l.
+Proof.
+  unfold fold_map. reflexivity. Qed.
+
+Theorem map_fold_map_equiv : forall X Y (f : X -> Y) (l : list X),
+  fold_map f l = map f l.
+Proof.
+  intros X Y f l. induction l as [| x l'].
+  Case "l = nil".
+    reflexivity.
+  Case "l = x :: l'".
+    simpl.
+    rewrite -> fold_map_cons.
+    rewrite -> IHl'.
+    reflexivity.
+  Qed.
 (** [] *)
 
 (* $Date: 2013-07-17 16:19:11 -0400 (Wed, 17 Jul 2013) $ *)
