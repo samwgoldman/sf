@@ -329,12 +329,22 @@ Proof.
 Theorem beq_nat_0_l : forall n,
    beq_nat 0 n = true -> n = 0.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n. destruct n as [| n'].
+  Case "n = 0".
+    reflexivity.
+  Case "n = S n'".
+    intros eq. inversion eq.
+  Qed.
 
 Theorem beq_nat_0_r : forall n,
    beq_nat n 0 = true -> n = 0.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n. destruct n as [| n'].
+  Case "n = 0".
+    reflexivity.
+  Case "n = S n'".
+    intros eq. inversion eq.
+  Qed.
 (** [] *)
 
 
