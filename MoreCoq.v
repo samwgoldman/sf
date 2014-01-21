@@ -268,7 +268,7 @@ Example sillyex1 : forall (X : Type) (x y z : X) (l j : list X),
      y :: l = x :: j ->
      x = y.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros X x y z l j eq1 eq2. inversion eq2. reflexivity. Qed.
 (** [] *)
 
 Theorem silly6 : forall (n : nat),
