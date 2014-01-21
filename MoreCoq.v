@@ -409,7 +409,25 @@ Theorem plus_n_n_injective : forall n m,
 Proof.
   intros n. induction n as [| n'].
     (* Hint: use the plus_n_Sm lemma *)
-    (* FILL IN HERE *) Admitted.
+  Case "n = 0".
+    intros m. destruct m as [| m'].
+    SCase "m = 0".
+      reflexivity.
+    SCase "m = S m'".
+      intros eq. inversion eq.
+  Case "n = S n'".
+    intros m. destruct m as [| m'].
+    SCase "m = 0".
+      intros eq. inversion eq.
+    SCase "m = S m'".
+      intros eq. inversion eq.
+      rewrite <- plus_n_Sm in H0.
+      rewrite <- plus_n_Sm in H0.
+      inversion H0.
+      apply IHn' in H1.
+      rewrite -> H1.
+      reflexivity.
+  Qed.
 (** [] *)
 
 (* ###################################################### *)
