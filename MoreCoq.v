@@ -785,11 +785,43 @@ Proof.
 (** **** Exercise: 4 stars, optional (app_length_twice) *)
 (** Prove this by induction on [l], without using app_length. *)
 
+Theorem app_length_cons' : forall (X : Type) (l1 l2 : list X) (x : X),
+     length (l1 ++ (x :: l2)) = S (length (l1 ++ l2)).
+Proof.
+  intros X l1 l2 x.
+  induction l1 as [| h l1'].
+  Case "l1 = nil".
+    simpl. reflexivity.
+  Case "l1 = h :: l1'".
+    simpl. rewrite -> IHl1'. reflexivity.
+  Qed.
+
 Theorem app_length_twice : forall (X:Type) (n:nat) (l:list X),
      length l = n ->
      length (l ++ l) = n + n.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros X n l.
+  generalize dependent n.
+  induction l as [| h l'].
+  Case "l = nil".
+    simpl. intros n eq. rewrite <- eq. reflexivity.
+  Case "l = h :: l'".
+    intros n. simpl. destruct n as [| n'].
+    SCase "n = 0".
+      intros eq. inversion eq.
+    SCase "n = S n'".
+      intros eq. inversion eq. inversion eq.
+      apply IHl' in H0.
+      rewrite -> app_length_cons'.
+      rewrite -> H0.
+      rewrite -> H1.
+      simpl.
+      assert (H: n' + S n' = S n' + n').
+        rewrite -> plus_comm. reflexivity.
+      rewrite -> H.
+      simpl.
+      reflexivity.
+  Qed.
 (** [] *)
 
 (* ###################################################### *)
