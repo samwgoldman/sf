@@ -878,11 +878,29 @@ Proof.
 (** **** Exercise: 3 stars, optional (combine_split) *)
 (** Complete the proof below *)
 
+Lemma eq_remove_cons : forall X (l1 l2 : list X) x,
+  l1 = l2 -> x :: l1 = x :: l2.
+Proof.
+  intros. rewrite -> H. reflexivity.
+  Qed.
+
 Theorem combine_split : forall X Y (l : list (X * Y)) l1 l2,
   split l = (l1, l2) ->
   combine l1 l2 = l.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros X Y l. induction l as [| h l'].
+  Case "l = nil".
+    intros l1 l2 eq. inversion eq. reflexivity.
+  Case "l = h :: l'".
+    intros l1 l2 eq.
+    destruct h.
+    inversion eq.
+    simpl.
+    apply eq_remove_cons.
+    apply IHl'.
+    destruct (split l').
+    reflexivity.
+  Qed.
 (** [] *)
 
 (** Sometimes, doing a [destruct] on a compound expression (a
