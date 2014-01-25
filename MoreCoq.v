@@ -1092,7 +1092,21 @@ Proof.
 Theorem beq_nat_sym : forall (n m : nat),
   beq_nat n m = beq_nat m n.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m. destruct (beq_nat n m) eqn:Hbeqnm.
+  Case "beq_nat n m = true".
+    apply beq_nat_true in Hbeqnm.
+    rewrite -> Hbeqnm.
+    apply beq_nat_refl.
+  Case "beq_nat n m = false".
+    destruct (beq_nat m n) eqn:Hbeqmn.
+    SCase "beq_nat m n = true".
+      apply beq_nat_true in Hbeqmn.
+      rewrite -> Hbeqmn in Hbeqnm.
+      rewrite <- beq_nat_refl in Hbeqnm.
+      inversion Hbeqnm.
+    SCase "beq_nat m n = true".
+      reflexivity.
+  Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars, advanced, optional (beq_nat_sym_informal) *)
