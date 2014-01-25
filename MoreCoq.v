@@ -1126,7 +1126,14 @@ Theorem beq_nat_trans : forall n m p,
   beq_nat m p = true ->
   beq_nat n p = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m p eq1 eq2.
+  apply beq_nat_true in eq1.
+  apply beq_nat_true in eq2.
+  rewrite -> eq1.
+  rewrite -> eq2.
+  symmetry.
+  apply beq_nat_refl.
+  Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars, advanced (split_combine) *)
