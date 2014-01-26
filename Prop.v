@@ -258,7 +258,18 @@ Abort.
 Theorem gorgeous_sum : forall n m,
   gorgeous n -> gorgeous m -> gorgeous (n + m).
 Proof.
- (* FILL IN HERE *) Admitted.
+  intros n m Gn Gm. induction Gm as [|m'|m'].
+  Case "g_0".
+    rewrite plus_0_r. apply Gn.
+  Case "g_plus3".
+    rewrite -> plus_swap.
+    apply g_plus3.
+    apply IHGm.
+  Case "g_plus5".
+    rewrite -> plus_swap.
+    apply g_plus5.
+    apply IHGm.
+  Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars, advanced (beautiful__gorgeous) *)
