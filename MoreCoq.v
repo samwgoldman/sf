@@ -1239,7 +1239,37 @@ Proof.
     Prove that [existsb'] and [existsb] have the same behavior.
 *)
 
-(* FILL IN HERE *)
+Fixpoint forallb {X : Type} (f : X -> bool) (l : list X) : bool :=
+  match l with
+  | nil => true
+  | x :: xs => if f x then forallb f xs else false
+  end.
+
+Fixpoint existsb {X : Type} (f : X -> bool) (l : list X) : bool :=
+  match l with
+  | nil => false
+  | x :: xs => if f x then true else existsb f xs
+  end.
+
+Definition existsb' {X : Type} (f : X -> bool) (l : list X) : bool :=
+  negb (forallb (fun x => negb (f x)) l).
+
+Theorem existsb_in_terms_of_forallb :
+  forall (X : Type) (f : X -> bool) (l : list X) (b : bool),
+  existsb f l = b -> existsb' f l = b.
+Proof.
+  intros X f l.
+  unfold existsb'.
+  induction l as [| x l'].
+  Case "l = nil".
+    simpl. intros b eq. rewrite eq. reflexivity.
+  Case "l = x :: l'".
+    simpl. destruct (f x).
+    SCase "f x = true".
+      intros b eq. simpl. rewrite eq. reflexivity.
+    SCase "f x = false".
+      intros b eq. simpl. apply IHl'. apply eq.
+  Qed.
 (** [] *)
 
 (* $Date: 2013-07-17 16:19:11 -0400 (Wed, 17 Jul 2013) $ *)
