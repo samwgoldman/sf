@@ -565,7 +565,15 @@ Proof.
 Theorem ev_ev__ev : forall n m,
   ev (n+m) -> ev n -> ev m.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m H1 H2.
+  induction H2 as [| n' H2'].
+  Case "H2 = ev_0".
+    simpl in H1. apply H1.
+  Case "H2 = ev_SS n' H1'".
+    apply IHH2'.
+    simpl in H1. inversion H1.
+    apply H0.
+  Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars, optional (ev_plus_plus) *)
