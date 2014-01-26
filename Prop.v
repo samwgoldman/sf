@@ -204,7 +204,11 @@ Inductive gorgeous : nat -> Prop :=
 Theorem gorgeous_plus13: forall n, 
   gorgeous n -> gorgeous (13+n).
 Proof.
-   (* FILL IN HERE *) Admitted.
+  intros n G. induction G. simpl.
+  apply g_plus5. apply g_plus5. apply g_plus3. apply g_0.
+  apply g_plus3. apply IHG.
+  apply g_plus5. apply IHG.
+  Qed.
 (** [] *)
 
 (** It seems intuitively obvious that, although [gorgeous] and
