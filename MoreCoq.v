@@ -1197,7 +1197,20 @@ Theorem filter_exercise : forall (X : Type) (test : X -> bool)
      filter test l = x :: lf ->
      test x = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros X test x l.
+  generalize dependent x.
+  induction l as [| h l'].
+  Case "l = nil".
+    intros x lf eq. inversion eq.
+  Case "l = h :: l'".
+    intros x lf. simpl. destruct (test h) eqn:Htesth.
+    SCase "test h = true".
+      intros eq. inversion eq.
+      rewrite <- H0.
+      apply Htesth.
+    SCase "test h = false".
+      apply IHl'.
+  Qed.
 (** [] *)
 
 (** **** Exercise: 4 stars, advanced (forall_exists_challenge) *)
