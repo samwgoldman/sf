@@ -295,13 +295,37 @@ Proof.
 
 Lemma helper_g_times2 : forall x y z, x + (z + y)= z + x + y.
 Proof.
-   (* FILL IN HERE *) Admitted.
+  intros x y z.
+  rewrite -> plus_swap.
+  rewrite -> plus_assoc.
+  reflexivity.
+  Qed.
 
 Theorem g_times2: forall n, gorgeous n -> gorgeous (2*n).
 Proof.
    intros n H. simpl. 
    induction H.
-   (* FILL IN HERE *) Admitted.
+   Case "g_0".
+     simpl. apply g_0.
+   Case "g_plus3".
+     rewrite -> plus_0_r.
+     rewrite -> plus_0_r in IHgorgeous.
+     rewrite <- plus_assoc.
+     apply g_plus3.
+     rewrite -> helper_g_times2.
+     rewrite <- plus_assoc.
+     apply g_plus3.
+     apply IHgorgeous.
+   Case "g_plus5".
+     rewrite -> plus_0_r.
+     rewrite -> plus_0_r in IHgorgeous.
+     rewrite <- plus_assoc.
+     apply g_plus5.
+     rewrite -> helper_g_times2.
+     rewrite <- plus_assoc.
+     apply g_plus5.
+     apply IHgorgeous.
+   Qed.
 (** [] *)
 
 
