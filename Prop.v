@@ -275,7 +275,18 @@ Proof.
 (** **** Exercise: 3 stars, advanced (beautiful__gorgeous) *)
 Theorem beautiful__gorgeous : forall n, beautiful n -> gorgeous n.
 Proof.
- (* FILL IN HERE *) Admitted.
+  intros n B. induction B as [| | | n' m'].
+  Case "b_0".
+    apply g_0.
+  Case "b_3".
+    apply g_plus3. apply g_0.
+  Case "b_5".
+    apply g_plus5. apply g_0.
+  Case "b_sum".
+    apply gorgeous_sum.
+    apply IHB1.
+    apply IHB2.
+  Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars, optional (g_times2) *)
