@@ -1149,13 +1149,24 @@ Proof.
     and [l2] for [split] [combine l1 l2 = (l1,l2)] to be true?)  *)
 
 Definition split_combine_statement : Prop :=
-(* FILL IN HERE *) admit.
+  forall (X Y : Type) (l1 : list X) (l2 : list Y),
+  length l1 = length l2 -> split (combine l1 l2) = (l1, l2).
 
 Theorem split_combine : split_combine_statement.
 Proof.
-(* FILL IN HERE *) Admitted.
-
-
+  unfold split_combine_statement.
+  intros X Y l1. induction l1 as [| x l1'].
+  Case "l1 = nil".
+    intros l2. destruct l2 as [| y l2'].
+    SCase "l2 = nil". reflexivity.
+    SCase "l2 = y :: l2'". intros eq. inversion eq.
+  Case "l1 = x :: l1'".
+    intros l2. destruct l2 as [| y l2'].
+    SCase "l2 = nil". intros eq. inversion eq.
+    SCase "l2 = y :: l1'".
+      simpl. intros eq. inversion eq.
+      apply IHl1' in H0. rewrite -> H0. reflexivity.
+  Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars (override_permute) *)
